@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 
-BASE_URL="https://infocon.org/cons/"
+BASE_URL="https://infocon.org/"
 TARGET_DIR="/mnt/InfoCon2024"
 
-# make sure our mount point exists
+# Make sure your archive mount is ready
 mkdir -p "$TARGET_DIR"
 
-# mirror only new/changed files, drop host dir, strip 'cons/', skip listings & query-URLs
+# Mirror root-level folders exactly, skip unwanted dirs & query strings
 wget -r \
      --no-parent \
      -nH \
-     --cut-dirs=1 \
      -N \
      -R "index.html*" \
      --reject-regex '.*\?.*' \
-     --exclude-directories="/fancyindex" \
+     --exclude-directories="/fancyindex,/rainbow%20tables" \
      -P "$TARGET_DIR" \
      "$BASE_URL"
